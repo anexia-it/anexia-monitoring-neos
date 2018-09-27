@@ -50,7 +50,7 @@ abstract class BaseController extends ActionController
     protected function validateRequest()
     {
         if ($this->request->getHttpRequest()->getMethod() === 'OPTIONS') {
-            die();
+            $this->throwStatus(200);
         }
 
         if (empty($this->accessToken) || !\is_string($this->accessToken) || \strlen(trim($this->accessToken)) <= 0) {
