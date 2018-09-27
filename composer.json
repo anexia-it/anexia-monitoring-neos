@@ -1,0 +1,29 @@
+{
+    "name": "anexia/neos-monitoring",
+    "description": "A neos plugin to monitor runtime versions, composer package versions and composer package licenses",
+    "version": "1.0.0",
+    "license": "MIT",
+    "type": "neos-plugin",
+    "authors": [
+        {
+            "name": "Nikita Bernthaler",
+            "email": "NBernthaler@anexia-it.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "neos/flow": ">=4.0",
+        "composer/semver": "~1.4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Anexia\\Neos\\Monitoring\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "Anexia.Neos.Monitoring"
+        }
+    }
+}

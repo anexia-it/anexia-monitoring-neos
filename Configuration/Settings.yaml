@@ -1,0 +1,15 @@
+Anexia:
+  Neos:
+    Monitoring:
+      queryParameter: 'access_token'
+      accessToken: ''
+      status:
+        checks:
+          class: Anexia\Neos\Monitoring\Check\DatabaseCheck
+
+Neos:
+  Flow:
+    mvc:
+      routes:
+        'Anexia.Neos.Monitoring':
+          position: 'before Neos.Neos'

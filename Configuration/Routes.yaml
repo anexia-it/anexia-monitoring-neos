@@ -1,0 +1,19 @@
+-
+  name: 'Anexia Monitoring - Modules'
+  uriPattern: 'anxapi/v1/modules'
+  defaults:
+    '@package': 'Anexia.Neos.Monitoring'
+    '@controller': 'Modules'
+    '@action': 'index'
+    '@format': 'json'
+  httpMethods: ['GET']
+
+-
+  name: 'Anexia Monitoring - Status'
+  uriPattern: 'anxapi/v1/up'
+  defaults:
+    '@package': 'Anexia.Neos.Monitoring'
+    '@controller': 'Status'
+    '@action': 'index'
+    '@format': 'json'
+  httpMethods: ['GET']

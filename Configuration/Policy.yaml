@@ -1,0 +1,15 @@
+privilegeTargets:
+  Neos\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
+    'Anexia.Neos.Monitoring:Modules':
+      matcher: 'method(Anexia\Neos\Monitoring\Controller\ModulesController->indexAction())'
+    'Anexia.Neos.Monitoring:Status':
+      matcher: 'method(Anexia\Neos\Monitoring\Controller\StatusController->indexAction())'
+
+roles:
+  'Neos.Flow:Everybody':
+    privileges:
+      -
+        privilegeTarget: 'Anexia.Neos.Monitoring:Modules'
+        permission: GRANT
+      - privilegeTarget: 'Anexia.Neos.Monitoring:Status'
+        permission: GRANT
