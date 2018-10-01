@@ -6,7 +6,7 @@
     '@controller': 'Modules'
     '@action': 'index'
     '@format': 'json'
-  httpMethods: ['GET']
+  httpMethods: ['GET', 'OPTIONS']
 
 -
   name: 'Anexia Monitoring - Status'
@@ -16,4 +16,4 @@
     '@controller': 'Status'
     '@action': 'index'
     '@format': 'json'
-  httpMethods: ['GET']
+  httpMethods: ['GET', 'OPTIONS']
