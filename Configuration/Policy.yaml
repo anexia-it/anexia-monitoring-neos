@@ -8,8 +8,7 @@ privilegeTargets:
 roles:
   'Neos.Flow:Everybody':
     privileges:
-      -
-        privilegeTarget: 'Anexia.Neos.Monitoring:Modules'
+      - privilegeTarget: 'Anexia.Neos.Monitoring:Modules'
         permission: GRANT
       - privilegeTarget: 'Anexia.Neos.Monitoring:Status'
         permission: GRANT

@@ -42,7 +42,7 @@ class ModulesController extends BaseController
         $modules = $this->getModuleData();
         $runtime = [
             'platform'                    => 'php',
-            'platform_version'            => PHP_VERSION,
+            'platform_version'            => phpversion(),
             'framework'                   => 'neos',
             'framework_installed_version' => $this->getActivePackageVersion('neos/neos') ?? '',
             'framework_newest_version'    => $this->getLatestPackageVersion('neos/neos') ?? '',
