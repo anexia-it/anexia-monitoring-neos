@@ -4,6 +4,7 @@ namespace Anexia\Neos\Monitoring\Controller;
 
 use Composer\Semver\VersionParser;
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Composer\ComposerUtility;
 use Neos\Flow\Package\PackageInterface;
 use Neos\Flow\Package\PackageManagerInterface;
 
@@ -64,11 +65,29 @@ class ModulesController extends BaseController
         $activePackages = $this->getActivePackages();
         /** @var PackageInterface $package */
         foreach ($activePackages as $packageKey => $package) {
-            if ($this->packageManager->isPackageActive($packageKey) && $package->getComposerName() === $packageName) {
-                return $package->getInstalledVersion();
+            if ($package->getComposerName() === $packageName && $this->packageManager->isPackageActive($packageKey)) {
+                return $this->getInstalledComposerPackageVersion($package);
             }
         }
         return null;
+    }
+
+    /**
+     * @param PackageInterface $package
+     * @return mixed
+     */
+    private function getInstalledComposerPackageVersion($package)
+    {
+        $composerName = $package->getComposerName();
+        foreach (ComposerUtility::readComposerLock() as $composerLockData) {
+            if (!isset($composerLockData['name'])) {
+                continue;
+            }
+            if ($composerLockData['name'] === $composerName) {
+                return $composerLockData['version'];
+            }
+        }
+        return $package->getComposerManifest('version');
     }
 
     /**
@@ -96,11 +115,12 @@ class ModulesController extends BaseController
         $modules = [];
         /** @var PackageInterface $package */
         foreach ($activePackages as $package) {
-            $manifest = $package->getComposerManifest();
             $module = [
                 'name'                       => $package->getPackageKey() ?? '',
-                'installed_version'          => $package->getInstalledVersion() ?? '',
-                'installed_version_licences' => $this->getValueAsArray($manifest['license'] ?? null),
+                'installed_version'          => $this->getInstalledComposerPackageVersion($package) ?? '',
+                'installed_version_licences' => $this->getValueAsArray(
+                    $package->getComposerManifest('license') ?? null
+                ),
                 'newest_version'             => '',
                 'newest_version_licences'    => [],
             ];
