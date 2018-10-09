@@ -1,7 +1,7 @@
 {
     "name": "anexia/neos-monitoring",
     "description": "A neos plugin to monitor runtime versions, composer package versions and composer package licenses",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "type": "neos-plugin",
     "authors": [

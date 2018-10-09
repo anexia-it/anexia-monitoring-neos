@@ -8,7 +8,7 @@ is alive and working correctly.
 Install the module via composer, therefore adapt the ``require`` part of your ``composer.json``:
 ```
 "require": {
-    "anexia/neos-monitoring": "1.0.0"
+    "anexia/neos-monitoring": "1.0.1"
 }
 ```
 
