@@ -23,6 +23,7 @@ class ModulesController extends BaseController
 
     /**
      * @param PackageManagerInterface $packageManager
+     *
      * @return void
      */
     public function injectPackageManager(PackageManagerInterface $packageManager)
@@ -42,22 +43,25 @@ class ModulesController extends BaseController
 
         $modules = $this->getModuleData();
         $runtime = [
-            'platform'                    => 'php',
-            'platform_version'            => phpversion(),
-            'framework'                   => 'neos',
+            'platform' => 'php',
+            'platform_version' => phpversion(),
+            'framework' => 'neos',
             'framework_installed_version' => $this->getActivePackageVersion('neos/neos') ?? '',
-            'framework_newest_version'    => $this->getLatestPackageVersion('neos/neos') ?? '',
+            'framework_newest_version' => $this->getLatestPackageVersion('neos/neos') ?? '',
         ];
 
         $this->response->setHeader('Content-Type', 'application/json');
-        return json_encode([
-            'runtime' => $runtime,
-            'modules' => $modules
-        ]);
+        return json_encode(
+            [
+                'runtime' => $runtime,
+                'modules' => $modules
+            ]
+        );
     }
 
     /**
      * @param $packageName
+     *
      * @return string|null
      */
     private function getActivePackageVersion($packageName)
@@ -65,7 +69,7 @@ class ModulesController extends BaseController
         $activePackages = $this->getActivePackages();
         /** @var PackageInterface $package */
         foreach ($activePackages as $packageKey => $package) {
-            if ($package->getComposerName() === $packageName && $this->packageManager->isPackageActive($packageKey)) {
+            if ($package->getComposerName() === $packageName) {
                 return $this->getInstalledComposerPackageVersion($package);
             }
         }
@@ -74,6 +78,7 @@ class ModulesController extends BaseController
 
     /**
      * @param PackageInterface $package
+     *
      * @return mixed
      */
     private function getInstalledComposerPackageVersion($package)
@@ -98,9 +103,7 @@ class ModulesController extends BaseController
         $activePackages = [];
         /** @var PackageInterface $package */
         foreach ($this->packageManager->getAvailablePackages() as $packageKey => $package) {
-            if ($this->packageManager->isPackageActive($packageKey)) {
-                $activePackages[$packageKey] = $package;
-            }
+            $activePackages[$packageKey] = $package;
         }
         return $activePackages;
     }
@@ -116,13 +119,13 @@ class ModulesController extends BaseController
         /** @var PackageInterface $package */
         foreach ($activePackages as $package) {
             $module = [
-                'name'                       => $package->getPackageKey() ?? '',
-                'installed_version'          => $this->getInstalledComposerPackageVersion($package) ?? '',
+                'name' => $package->getPackageKey() ?? '',
+                'installed_version' => $this->getInstalledComposerPackageVersion($package) ?? '',
                 'installed_version_licences' => $this->getValueAsArray(
                     $package->getComposerManifest('license') ?? null
                 ),
-                'newest_version'             => '',
-                'newest_version_licences'    => [],
+                'newest_version' => '',
+                'newest_version_licences' => [],
             ];
 
             $latestStable = $this->getLatestPackage($package->getComposerName());
@@ -139,6 +142,7 @@ class ModulesController extends BaseController
 
     /**
      * @param mixed $value
+     *
      * @return array
      */
     private function getValueAsArray($value): array
@@ -154,6 +158,7 @@ class ModulesController extends BaseController
      *
      * @param object $versionData
      * @param object $lastVersion
+     *
      * @return object
      */
     private function getNewerVersion($versionData, $lastVersion)
@@ -179,6 +184,7 @@ class ModulesController extends BaseController
      * Get latest (stable) package from packagist
      *
      * @param string $packageName , the name of the package as registered on packagist, e.g. 'laravel/framework'
+     *
      * @return object|null
      */
     private function getLatestPackage($packageName)
@@ -207,6 +213,7 @@ class ModulesController extends BaseController
 
     /**
      * @param $packageName
+     *
      * @return string|null
      */
     private function getLatestPackageVersion($packageName)
